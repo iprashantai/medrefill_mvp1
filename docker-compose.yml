@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ignitehealth
+      POSTGRES_PASSWORD: ignitehealth
+      POSTGRES_DB: medrefills
+      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=en_US.UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ignitehealth"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://ignitehealth:ignitehealth@db:5432/medrefills
+      REDIS_URL: redis://redis:6379/0
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GOOGLE_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:8000
+
+volumes:
+  postgres_data:
+
