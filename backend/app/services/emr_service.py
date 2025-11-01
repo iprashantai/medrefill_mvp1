@@ -9,6 +9,7 @@ from datetime import date, datetime, timedelta
 def get_patient_data(mrn: str) -> Dict:
     """
     Mock function to retrieve patient demographics.
+    Enterprise-grade mock data for Fortune 50 healthcare company demos.
     
     Args:
         mrn: Medical Record Number
@@ -16,22 +17,27 @@ def get_patient_data(mrn: str) -> Dict:
     Returns:
         Dictionary with patient information
     """
-    # Mock patient data - "Deny" case
-    if mrn == "12345":
-        return {
-            "mrn": "12345",
-            "first_name": "John",
-            "last_name": "Doe",
-            "dob": "1975-04-10"
-        }
+    # Enterprise mock patients for realistic demo
+    patients = {
+        "12345": {"first_name": "John", "last_name": "Doe", "dob": "1975-04-10"},
+        "67890": {"first_name": "Jane", "last_name": "Smith", "dob": "1980-06-15"},
+        "23456": {"first_name": "Michael", "last_name": "Martin", "dob": "1968-03-22"},
+        "34567": {"first_name": "Sarah", "last_name": "Johnson", "dob": "1972-11-08"},
+        "45678": {"first_name": "Robert", "last_name": "Williams", "dob": "1985-07-14"},
+        "56789": {"first_name": "Emily", "last_name": "Davis", "dob": "1979-09-30"},
+        "78901": {"first_name": "David", "last_name": "Brown", "dob": "1965-12-05"},
+        "89012": {"first_name": "Lisa", "last_name": "Anderson", "dob": "1983-02-18"},
+        "90123": {"first_name": "James", "last_name": "Wilson", "dob": "1977-08-25"},
+        "01234": {"first_name": "Patricia", "last_name": "Taylor", "dob": "1971-05-11"},
+    }
     
-    # Mock patient data - "Approve" case
-    elif mrn == "67890":
+    patient = patients.get(mrn)
+    if patient:
         return {
-            "mrn": "67890",
-            "first_name": "Jane",
-            "last_name": "Smith",
-            "dob": "1980-06-15"
+            "mrn": mrn,
+            "first_name": patient["first_name"],
+            "last_name": patient["last_name"],
+            "dob": patient["dob"]
         }
     
     # Default mock patient
@@ -88,6 +94,85 @@ def get_patient_clinical_data(mrn: str) -> Dict:
                 }
             }
         }
+    
+    # Additional enterprise mock clinical scenarios
+    clinical_scenarios = {
+        "23456": {  # Michael Martin - Edge case
+            "last_visit_date": (today - timedelta(days=395)).strftime("%Y-%m-%d"),  # 13 months
+            "labs": {
+                "A1c": {
+                    "value": 7.9,
+                    "date": (today - timedelta(days=120)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "34567": {  # Sarah Johnson - Approve
+            "last_visit_date": (today - timedelta(days=45)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 6.2,
+                    "date": (today - timedelta(days=20)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "45678": {  # Robert Williams - Deny (A1c too high)
+            "last_visit_date": (today - timedelta(days=90)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 8.5,
+                    "date": (today - timedelta(days=45)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "56789": {  # Emily Davis - Approve
+            "last_visit_date": (today - timedelta(days=30)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 6.8,
+                    "date": (today - timedelta(days=15)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "78901": {  # David Brown - Deny (old visit + old labs)
+            "last_visit_date": (today - timedelta(days=420)).strftime("%Y-%m-%d"),  # 14 months
+            "labs": {
+                "A1c": {
+                    "value": 7.5,
+                    "date": (today - timedelta(days=210)).strftime("%Y-%m-%d")  # 7 months old
+                }
+            }
+        },
+        "89012": {  # Lisa Anderson - Approve
+            "last_visit_date": (today - timedelta(days=75)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 6.9,
+                    "date": (today - timedelta(days=60)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "90123": {  # James Wilson - Approve
+            "last_visit_date": (today - timedelta(days=50)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 7.1,
+                    "date": (today - timedelta(days=40)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+        "01234": {  # Patricia Taylor - Deny (visit OK but A1c too high)
+            "last_visit_date": (today - timedelta(days=100)).strftime("%Y-%m-%d"),
+            "labs": {
+                "A1c": {
+                    "value": 8.2,
+                    "date": (today - timedelta(days=50)).strftime("%Y-%m-%d")
+                }
+            }
+        },
+    }
+    
+    if mrn in clinical_scenarios:
+        return clinical_scenarios[mrn]
     
     # Default mock clinical data
     return {
