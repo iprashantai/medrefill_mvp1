@@ -22,7 +22,6 @@ import {
   ArrowLeft,
   CheckCircle2,
   XCircle,
-  Clock,
   User,
   Pill,
   Activity,
@@ -30,9 +29,7 @@ import {
   FileText,
   MessageSquare,
   Phone,
-  Mail,
   TrendingUp,
-  AlertCircle,
   Shield,
   Clock as ClockIcon,
 } from 'lucide-react'
