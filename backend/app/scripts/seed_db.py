@@ -23,14 +23,14 @@ def seed_database():
     with Session(engine) as session:
         # Define enterprise patients
         patients_data = [
-            {"mrn": "12345", "first_name": "John", "last_name": "Doe", "dob": date(1975, 4, 10)},
-            {"mrn": "67890", "first_name": "Jane", "last_name": "Smith", "dob": date(1980, 6, 15)},
-            {"mrn": "23456", "first_name": "Michael", "last_name": "Martin", "dob": date(1968, 3, 22)},
-            {"mrn": "34567", "first_name": "Sarah", "last_name": "Johnson", "dob": date(1972, 11, 8)},
-            {"mrn": "45678", "first_name": "Robert", "last_name": "Williams", "dob": date(1985, 7, 14)},
-            {"mrn": "56789", "first_name": "Emily", "last_name": "Davis", "dob": date(1979, 9, 30)},
-            {"mrn": "78901", "first_name": "David", "last_name": "Brown", "dob": date(1965, 12, 5)},
-            {"mrn": "89012", "first_name": "Lisa", "last_name": "Anderson", "dob": date(1983, 2, 18)},
+            {"mrn": "12345", "first_name": "John", "last_name": "Doe", "date_of_birth": date(1975, 4, 10)},
+            {"mrn": "67890", "first_name": "Jane", "last_name": "Smith", "date_of_birth": date(1980, 6, 15)},
+            {"mrn": "23456", "first_name": "Michael", "last_name": "Martin", "date_of_birth": date(1968, 3, 22)},
+            {"mrn": "34567", "first_name": "Sarah", "last_name": "Johnson", "date_of_birth": date(1972, 11, 8)},
+            {"mrn": "45678", "first_name": "Robert", "last_name": "Williams", "date_of_birth": date(1985, 7, 14)},
+            {"mrn": "56789", "first_name": "Emily", "last_name": "Davis", "date_of_birth": date(1979, 9, 30)},
+            {"mrn": "78901", "first_name": "David", "last_name": "Brown", "date_of_birth": date(1965, 12, 5)},
+            {"mrn": "89012", "first_name": "Lisa", "last_name": "Anderson", "date_of_birth": date(1983, 2, 18)},
         ]
         
         # Create or get patients
